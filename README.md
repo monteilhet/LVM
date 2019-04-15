@@ -53,3 +53,32 @@ mount /dev/vg01/lvol1 /u02
 ```
 
 > lvol1 is mounted as /dev/mapper/vg01-lvol1
+
+
+## Linux partitionning
+
+ * LV home
+ * LV root
+ * LV_swap_1
+ * ext2 / boot
+ 
+
+```bash
+
+pvcreate /dev/sda1
+vgcreate vg-sys /dev/sda1
+
+lvcreate -L 1G -n boot vg-sys
+lvcreate -L 8G -n swap vg-sys
+lvcreate -l 100%FREE -n root vg-sys
+
+pvcreate /dev/sda2
+vgcreate vg-user /dev/sda2
+lvcreate -l 100%FREE -n user vg-user
+
+mkswap -L swap /dev/vg-sys/swap
+mkfs -t ext4 -L root /dev/vg-sys/boot
+mkfs -t ext4 -L root /dev/vg-sys/root
+mkfs -t ext4 -L user /dev/vg-user/user
+
+```
