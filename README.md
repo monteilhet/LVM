@@ -24,6 +24,8 @@ pvcreate /dev/sdb2
 
 pvdisplay
 pvdisplay /dev/sdb1
+
+pvs -v
 ```
 
 ### create volume group using 2 physical volumes
@@ -33,6 +35,8 @@ vgcreate vg01 /dev/sdb1 /dev/sdb2
 
 vgdisplay vg01
 ls -l /dev/vg01
+
+vgs -v
 ```
 
 
@@ -45,6 +49,9 @@ lvcreate -n lvol1 -L 130M vg01
 
 lvdisplay
 lvdisplay /dev/vg01/lvol1
+
+lvs -v
+lvscan
 
 mkfs -t ext4 /dev/vg01/lvol1
 mkdir /u02
